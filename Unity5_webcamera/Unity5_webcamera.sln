@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity5_webcamera", "Unity5_webcamera.csproj", "{5A21DEC3-C321-226A-E739-8F7FC3EAC9A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity5_webcamera.Plugins", "Unity5_webcamera.Plugins.csproj", "{1DB82818-80CD-EFED-3C34-69F321A1AF55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity5_webcamera.Editor.Plugins", "Unity5_webcamera.Editor.Plugins.csproj", "{E6952E63-D19C-BD32-EF59-FC596024B719}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A21DEC3-C321-226A-E739-8F7FC3EAC9A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A21DEC3-C321-226A-E739-8F7FC3EAC9A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A21DEC3-C321-226A-E739-8F7FC3EAC9A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A21DEC3-C321-226A-E739-8F7FC3EAC9A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DB82818-80CD-EFED-3C34-69F321A1AF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DB82818-80CD-EFED-3C34-69F321A1AF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DB82818-80CD-EFED-3C34-69F321A1AF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DB82818-80CD-EFED-3C34-69F321A1AF55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6952E63-D19C-BD32-EF59-FC596024B719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6952E63-D19C-BD32-EF59-FC596024B719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6952E63-D19C-BD32-EF59-FC596024B719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6952E63-D19C-BD32-EF59-FC596024B719}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

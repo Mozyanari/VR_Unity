@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gridmap", "gridmap.csproj", "{C8B27112-54AA-7B5F-818F-29CEF42DEDF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gridmap.Editor", "gridmap.Editor.csproj", "{46B17601-853D-4AB1-0D6F-141E663CF1A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8B27112-54AA-7B5F-818F-29CEF42DEDF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B27112-54AA-7B5F-818F-29CEF42DEDF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B27112-54AA-7B5F-818F-29CEF42DEDF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B27112-54AA-7B5F-818F-29CEF42DEDF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B17601-853D-4AB1-0D6F-141E663CF1A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B17601-853D-4AB1-0D6F-141E663CF1A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B17601-853D-4AB1-0D6F-141E663CF1A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B17601-853D-4AB1-0D6F-141E663CF1A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
