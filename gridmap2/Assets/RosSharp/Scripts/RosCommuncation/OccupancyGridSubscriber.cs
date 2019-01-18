@@ -37,11 +37,15 @@ namespace RosSharp.RosBridgeClient
 
         private void Update()
         {
+            /*
             if (ready_flag > 500)
             {
                 //地図の作成
                 createmap();
             }
+            */
+
+            /*
             //Debug.Log(old_count);
             if (receive_flag == 1)
             {
@@ -54,15 +58,35 @@ namespace RosSharp.RosBridgeClient
                     for (int i = 0; i < GridPoint.Length; i++)
                     {
                         //Debug.Log(i);
-                        DestroyObject(GridPoint[i]);
+                        //GameObject.DestroyImmediate(GridPoint[i].transform);
+                        //DestroyObject(GridPoint[i].gameObject);
+                        DestroyImmediate(GridPoint[i], true);
                         //GridPoint[i].transform.DetachChildren();
                     }
                 }
+            }
+            */
+            if (receive_flag == 1)
+            {
+
+                
+
+                var clones = GameObject.FindGameObjectsWithTag("Grid");
+                if(clones != null) {
+                    foreach (var clone in clones)
+                    {
+                        Destroy(clone);
+                    }
+                }
+
+                createmap();
+
             }
             
 
 
         }
+        /*
         protected void OnDisable()
         {
             if (GridPoint.Length != 0)
@@ -77,6 +101,7 @@ namespace RosSharp.RosBridgeClient
                 }
             }
         }
+        */
 
         private void createmap()
         {
@@ -89,6 +114,7 @@ namespace RosSharp.RosBridgeClient
                 //衝突判定をなくすためにColliderを削除
                 DestroyImmediate(GridPoint[i].GetComponent<Collider>());
                 GridPoint[i].name = "GridPoint"+i;
+                GridPoint[i].tag = "Grid";
                 //このスクリプトが張られたオブジェクトを親にして，今回生成したオブジェクトが子になる
                 GridPoint[i].transform.parent = transform;
                 //マテリアルをParticles/Additiveにする
