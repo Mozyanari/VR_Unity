@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\mozyanari\.android\build-cache\e917930efcafd6a694082a653cdd64e1778ab3cf\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="ee480f74e93a3d7f1cb226e86a6ef435e7fbb05f">
+        <dex dex="C:\Users\mozyanari\Documents\unity_project\gridmap2\Temp\gradleOut\build\intermediates\pre-dexed\release\classes_fba5a16846cf6a78161b0c62084145596c28e2c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mozyanari\Documents\unity_project\gridmap2\Temp\gradleOut\libs\unity-classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="7443096731009c4f1edb3f24ae945743c1ad23b7">
+        <dex dex="C:\Users\mozyanari\Documents\unity_project\gridmap2\Temp\gradleOut\build\intermediates\pre-dexed\release\unity-classes_c713fbdad828442479778e4967388f13de28ffad.jar" />
+    </item>
+
+</items>

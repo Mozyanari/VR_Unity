@@ -7,6 +7,7 @@ namespace RosSharp.RosBridgeClient
     public class OccupancyGridSubscriber : Subscriber<Messages.Navigation.OccupancyGrid>
     {
         //public Transform PublishedTransform;
+        public GameObject block;
         private int data_length;
         private float resolution;
         private int height;
@@ -68,9 +69,6 @@ namespace RosSharp.RosBridgeClient
             */
             if (receive_flag == 1)
             {
-
-                
-
                 var clones = GameObject.FindGameObjectsWithTag("Grid");
                 if(clones != null) {
                     foreach (var clone in clones)
@@ -109,6 +107,7 @@ namespace RosSharp.RosBridgeClient
             //オブジェクトの初期化
             for (int i = 0; i < count; i++)
             {
+                
                 //Cubeのオブジェクトを生成
                 GridPoint[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 //衝突判定をなくすためにColliderを削除
@@ -119,6 +118,15 @@ namespace RosSharp.RosBridgeClient
                 GridPoint[i].transform.parent = transform;
                 //マテリアルをParticles/Additiveにする
                 //GridPoint[i].GetComponent<Renderer>().material = new Material(Shader.Find("Particles/Additive"));
+                
+                /*
+                //オブジェクト生成の高速化
+                GridPoint[i] = Instantiate(block,transform);
+                //衝突判定をなくすためにColliderを削除
+                DestroyImmediate(GridPoint[i].GetComponent<Collider>());
+                GridPoint[i].name = "GridPoint" + i;
+                GridPoint[i].tag = "Grid";
+                */
             }
 
             //オブジェクトの設定
@@ -195,15 +203,15 @@ namespace RosSharp.RosBridgeClient
                 if (gridmap.data[i] > 99)
                 {
                     //行の番号
-                    int line = (i / width) + 1;
+                    int line = i / width;
                     //列の番号
-                    int raw = (i % width) + 1;
+                    int raw = i % width;
                     //行の位置の計算
                     //GridPosition[j].x = ((line - 1) * resolution) - ((resolution * width)/2);
-                    GridPosition[j].x = ((resolution / 2) + (line - 1) * resolution) - 20;
+                    GridPosition[j].x = ((resolution / 2) + (line) * resolution) - 20;
                     //列の位置の計算
                     //GridPosition[j].z = ((raw - 1) * resolution) - ((resolution * height)/2);
-                    GridPosition[j].z = ((resolution / 2) + (raw - 1) * resolution) - 20;
+                    GridPosition[j].z = ((resolution / 2) + (raw) * resolution) - 20;
 
                     j++;
                     if (j > count)
