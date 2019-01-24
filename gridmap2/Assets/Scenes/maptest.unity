@@ -167,12 +167,13 @@ GameObject:
   - component: {fileID: 266597167}
   - component: {fileID: 266597168}
   - component: {fileID: 266597169}
+  - component: {fileID: 266597170}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &266597165
 MonoBehaviour:
@@ -207,13 +208,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 266597164}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fb0297b711da1347a4ac135369b2529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Topic: /map
   TimeStep: 10
+  block: {fileID: 100000, guid: c28fa8d61f81fb742b1180a6d4516625, type: 3}
 --- !u!114 &266597168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +244,19 @@ MonoBehaviour:
   Topic: /scan_filter
   TimeStep: 0
   laserScanWriter: {fileID: 1450119194}
+--- !u!114 &266597170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 266597164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5973448577ab049a1f21d8ec8d85fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /map
+  TimeStep: 10
 --- !u!1 &693197436
 GameObject:
   m_ObjectHideFlags: 0

@@ -332,6 +332,7 @@
     <Compile Include="Assets\RosSharp\Scripts\MessageHandling\JoyButtonWriter.cs" />
     <Compile Include="Assets\RosSharp\Scripts\MessageHandling\LaserScanReader.cs" />
     <Compile Include="Assets\RosSharp\Scripts\MessageHandling\LaserScanWriter.cs" />
+    <Compile Include="Assets\RosSharp\Scripts\RosCommuncation\FastOccupancyGridSubscriber.cs" />
     <Compile Include="Assets\RosSharp\Scripts\RosCommuncation\GetParamServiceProvider.cs" />
     <Compile Include="Assets\RosSharp\Scripts\RosCommuncation\ImagePublisher.cs" />
     <Compile Include="Assets\RosSharp\Scripts\RosCommuncation\ImageSubscriber.cs" />
