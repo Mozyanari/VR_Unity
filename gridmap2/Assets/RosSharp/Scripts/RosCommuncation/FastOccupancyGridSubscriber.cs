@@ -153,10 +153,10 @@ namespace RosSharp.RosBridgeClient
                         //列の番号
                         int raw = (int)i % width;
                         //行の位置の計算
-                        //GridPosition[j].x = ((line - 1) * resolution) - ((resolution * width)/2);
+                        //GridPosition[j].x = (line * resolution) - ((resolution * width)/2);
                         Position.x = ((resolution / 2) + (line) * resolution) - 20;
                         //列の位置の計算
-                        //GridPosition[j].z = ((raw - 1) * resolution) - ((resolution * height)/2);
+                        //GridPosition[j].z = (raw * resolution) - ((resolution * height)/2);
                         Position.z = ((resolution / 2) + (raw) * resolution) - 20;
 
                         //Objectの生成
@@ -171,7 +171,7 @@ namespace RosSharp.RosBridgeClient
                         Point.transform.parent = transform;
                         //色をランダムに
                         Point.GetComponent<Renderer>().material.color = new Color((float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01));
-                        Point.transform.localScale = new Vector3((float)0.1, (float)0.1, (float)0.1);
+                        Point.transform.localScale = new Vector3((float)0.05, (float)0.05, (float)0.05);
                         //位置は上で計算済みのものを使用
                         Point.transform.localPosition = Position;
 
@@ -212,7 +212,7 @@ namespace RosSharp.RosBridgeClient
                             Point.transform.parent = transform;
                             //色をランダムに
                             Point.GetComponent<Renderer>().material.color = new Color((float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01));
-                            Point.transform.localScale = new Vector3((float)0.1, (float)0.1, (float)0.1);
+                            Point.transform.localScale = new Vector3((float)0.05, (float)0.05, (float)0.05);
                             //位置は上で計算済みのものを使用
                             Point.transform.localPosition = Position;
 

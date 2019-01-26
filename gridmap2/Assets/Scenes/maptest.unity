@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa324daa2e3a0e498163929b0536bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /icart_first/pose_ground_truth
+  Topic: /ypspur_ros/odom
   TimeStep: 0
   PublishedTransform: {fileID: 693197440}
 --- !u!114 &266597169
