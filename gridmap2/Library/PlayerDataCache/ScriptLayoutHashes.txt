@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/mozyanari/Documents/unity_project/gridmap2/masanari.apk
+C:/Users/Morishita-PC/Documents/VR_Unity/gridmap2/gmapping.apk
 SceneListBegin?
 Assets/Scenes/maptest.unity
 SceneListEnd?

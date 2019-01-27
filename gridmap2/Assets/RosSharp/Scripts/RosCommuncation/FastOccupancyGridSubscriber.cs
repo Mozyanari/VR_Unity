@@ -13,6 +13,8 @@ namespace RosSharp.RosBridgeClient
         private float resolution;
         private int height;
         private int width;
+        private float offset_x;
+        private float offset_y;
 
         int receive_flag = 0;
         int create_flag = 0;
@@ -154,10 +156,15 @@ namespace RosSharp.RosBridgeClient
                         int raw = (int)i % width;
                         //行の位置の計算
                         //GridPosition[j].x = (line * resolution) - ((resolution * width)/2);
-                        Position.x = ((resolution / 2) + (line) * resolution) - 20;
+                        //Position.z = ((resolution / 2) + (line) * resolution)-20;
+                        Position.y = ((resolution / 2) + (line) * resolution) + offset_y;
+                        //Position.x = ((resolution / 2) + (line) * resolution);
                         //列の位置の計算
                         //GridPosition[j].z = (raw * resolution) - ((resolution * height)/2);
-                        Position.z = ((resolution / 2) + (raw) * resolution) - 20;
+                        Position.x = ((resolution / 2) + (raw) * resolution) + offset_x;
+                        //Position.y = ((resolution / 2) + (raw) * resolution);
+                        Position.z = 0;
+                        Position = Position.Ros2Unity();
 
                         //Objectの生成
                         Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -171,7 +178,7 @@ namespace RosSharp.RosBridgeClient
                         Point.transform.parent = transform;
                         //色をランダムに
                         Point.GetComponent<Renderer>().material.color = new Color((float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01));
-                        Point.transform.localScale = new Vector3((float)0.05, (float)0.05, (float)0.05);
+                        Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
                         //位置は上で計算済みのものを使用
                         Point.transform.localPosition = Position;
 
@@ -194,11 +201,16 @@ namespace RosSharp.RosBridgeClient
                             //列の番号
                             int raw = (int)i % width;
                             //行の位置の計算
-                            //GridPosition[j].x = ((line - 1) * resolution) - ((resolution * width)/2);
-                            Position.x = ((resolution / 2) + (line) * resolution) - 20;
+                            //GridPosition[j].x = (line * resolution) - ((resolution * width)/2);
+                            //Position.z = ((resolution / 2) + (line) * resolution)-20;
+                            Position.y = ((resolution / 2) + (line) * resolution) + offset_y;
+                            //Position.x = ((resolution / 2) + (line) * resolution);
                             //列の位置の計算
-                            //GridPosition[j].z = ((raw - 1) * resolution) - ((resolution * height)/2);
-                            Position.z = ((resolution / 2) + (raw) * resolution) - 20;
+                            //GridPosition[j].z = (raw * resolution) - ((resolution * height)/2);
+                            Position.x = ((resolution / 2) + (raw) * resolution) + offset_x;
+                            //Position.y = ((resolution / 2) + (raw) * resolution);
+                            Position.z = 0;
+                            Position = Position.Ros2Unity();
 
                             //Objectの生成
                             Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -212,7 +224,7 @@ namespace RosSharp.RosBridgeClient
                             Point.transform.parent = transform;
                             //色をランダムに
                             Point.GetComponent<Renderer>().material.color = new Color((float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01), (float)(i % Random.Range(1.0f, 100.0f) * 0.01));
-                            Point.transform.localScale = new Vector3((float)0.05, (float)0.05, (float)0.05);
+                            Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
                             //位置は上で計算済みのものを使用
                             Point.transform.localPosition = Position;
 
@@ -245,10 +257,11 @@ namespace RosSharp.RosBridgeClient
         protected override void ReceiveMessage(Messages.Navigation.OccupancyGrid gridmap)
         {
             Debug.Log(gridmap.data.Length);
-            
 
             //地図のパラメータを取得
             resolution = gridmap.info.resolution;
+            offset_x = gridmap.info.origin.position.x;
+            offset_y = gridmap.info.origin.position.y;
             //Debug.Log(resolution);
             //height方向のcellの数
             height = (int)gridmap.info.height;

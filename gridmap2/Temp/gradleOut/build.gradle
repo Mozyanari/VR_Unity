@@ -26,11 +26,11 @@ dependencies {
 
 android {
 	compileSdkVersion 28
-	buildToolsVersion '28.0.3'
+	buildToolsVersion '28.0.2'
 
 	defaultConfig {
 		targetSdkVersion 28
-		applicationId 'com.home.gridtest'
+		applicationId 'com.lab.gmapping'
 	}
 
 	lintOptions {
