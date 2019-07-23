@@ -677,7 +677,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &956537774
 MonoBehaviour:
@@ -705,7 +705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeout: 10
   Protocol: 0
-  RosBridgeServerUrl: ws://172.28.35.210:9090
+  RosBridgeServerUrl: ws://192.168.0.3:9090
 --- !u!4 &956537776
 Transform:
   m_ObjectHideFlags: 0
