@@ -1,0 +1,4 @@
+#Tue Jul 23 16:52:25 JST 2019
+base.0=C\:\\Users\\Morishita-PC\\Documents\\VR_Unity\\EditGridMap\\Temp\\gradleOut\\build\\intermediates\\transforms\\dex\\release\\0
+path.0=classes.dex
+renamed.0=classes.dex
