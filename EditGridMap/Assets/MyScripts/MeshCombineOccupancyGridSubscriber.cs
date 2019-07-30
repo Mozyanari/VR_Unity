@@ -53,6 +53,8 @@ namespace RosSharp.RosBridgeClient
         //robot位置
         public GameObject RobotObject;
 
+        GameObject Point;
+
         // Use this for initialization
         protected override void Start()
         {
@@ -68,6 +70,7 @@ namespace RosSharp.RosBridgeClient
                 createmap();
                 //一つ前の障害物のデータを比較用に保存
                 //old_GridFlag = GridFlag;
+                //createcollder();
             }
 
         }
@@ -109,8 +112,8 @@ namespace RosSharp.RosBridgeClient
                     //列の番号
                     int raw = i % width;
                     //行列の位置の計算
-                    Position.y = ((resolution / 2) + (line) * resolution) + offset_y;
                     Position.x = ((resolution / 2) + (raw) * resolution) + offset_x;
+                    Position.y = ((resolution / 2) + (line) * resolution) + offset_y;
                     Position.z = 0;
                     //ROSの座標系からUnityの座標系に変換
                     Position = Position.Ros2Unity();
@@ -118,6 +121,14 @@ namespace RosSharp.RosBridgeClient
                     //CombineInstanceに情報を入力
                     combineInstanceAry[wall_count / cube_max][wall_count % cube_max].mesh = cubeMesh;
                     combineInstanceAry[wall_count / cube_max][wall_count % cube_max].transform = Matrix4x4.TRS(new Vector3(Position.x, 0, Position.z), Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
+
+                    //Colliderを生成
+                    
+                    Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Point.name = "GridPoint" + i;
+                    Point.transform.position = Position;
+                    Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
+                    DestroyImmediate(Point.GetComponent<MeshFilter>());
 
                     wall_count++;
 
@@ -140,6 +151,14 @@ namespace RosSharp.RosBridgeClient
             }
         }
 
+        void createcollder()
+        {
+            //ロボットの位置を取得
+            Vector3 robotposition = RobotObject.transform.position;
+
+            //地図におけるロボットの位置を計算
+
+        }
         protected override void ReceiveMessage(Messages.Navigation.OccupancyGrid gridmap)
         {
             Debug.Log(gridmap.data.Length);
