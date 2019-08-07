@@ -125,7 +125,8 @@ namespace RosSharp.RosBridgeClient
                     //Colliderを生成
                     
                     Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    Point.name = "GridPoint" + i;
+                    Point.name = i.ToString();
+                    
                     Point.transform.position = Position;
                     Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
                     DestroyImmediate(Point.GetComponent<MeshFilter>());

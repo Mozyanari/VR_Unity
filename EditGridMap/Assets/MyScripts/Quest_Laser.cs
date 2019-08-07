@@ -39,7 +39,6 @@ public class Quest_Laser : MonoBehaviour
     void Update()
     {
         var pointer = Pointer_R; // コントローラーを取得
-                               // コントローラーがない or LineRendererがなければ何もしない
 
         if (pointer == null || _LaserPointerRenderer == null)
         {
@@ -56,14 +55,15 @@ public class Quest_Laser : MonoBehaviour
         {
             // Rayがヒットしたらそこまで
             _LaserPointerRenderer.SetPosition(1, hitInfo.point);
-            //ヒットした名前を表示
-            text.text = hitInfo.collider.gameObject.name;
+            
 
-            if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
+            if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger,OVRInput.Controller.LTouch))
             {
                 //完全に消える
                 //hitInfo.collider.gameObject.SetActive(false);
-                hitInfo.transform.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 0.0f, 1.0f, 1.0f);
+                //hitInfo.transform.gameObject.GetComponent<Renderer>().material.color = new Color(1.0f, 0.0f, 1.0f, 1.0f);
+                //ヒットした名前を表示
+                text.text = hitInfo.collider.gameObject.name;
             }
             else if (OVRInput.Get(OVRInput.RawButton.Back))
             {
