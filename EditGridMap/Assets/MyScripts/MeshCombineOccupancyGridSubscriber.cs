@@ -51,7 +51,7 @@ namespace RosSharp.RosBridgeClient
         private Mesh[] combineMesh;
 
         //robot位置
-        public GameObject RobotObject;
+        //public GameObject RobotObject;
 
         GameObject Point;
 
@@ -75,13 +75,18 @@ namespace RosSharp.RosBridgeClient
 
         }
 
-        private void Update()
-        {
-
-        }
-
         private void createmap()
         {
+            //前回作られた物があれば削除する(メッシュとコライダー)
+            var clones = GameObject.FindGameObjectsWithTag("Grid");
+            if (clones != null)
+            {
+                foreach (var clone in clones)
+                {
+                    Destroy(clone);
+                }
+            }
+
             //受信フラグを折る
             receive_flag = 0;
             //使用するmeshを取得
@@ -108,12 +113,12 @@ namespace RosSharp.RosBridgeClient
                     Debug.Log(wall_count);
                     //位置の計算
                     //行の番号
-                    int line = i / width;
+                    int line = i % width;
                     //列の番号
-                    int raw = i % width;
+                    int raw = i / width;
                     //行列の位置の計算
-                    Position.x = ((resolution / 2) + (raw) * resolution) + offset_x;
-                    Position.y = ((resolution / 2) + (line) * resolution) + offset_y;
+                    Position.x = ((resolution / 2) + (line) * resolution) + offset_x;
+                    Position.y = ((resolution / 2) + (raw) * resolution) + offset_y;
                     Position.z = 0;
                     //ROSの座標系からUnityの座標系に変換
                     Position = Position.Ros2Unity();
@@ -123,12 +128,13 @@ namespace RosSharp.RosBridgeClient
                     combineInstanceAry[wall_count / cube_max][wall_count % cube_max].transform = Matrix4x4.TRS(new Vector3(Position.x, 0, Position.z), Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
 
                     //Colliderを生成
-                    
                     Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     Point.name = i.ToString();
+                    Point.tag = "Grid";
                     
                     Point.transform.position = Position;
                     Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
+                    //meshはCombineMeshesでまとめて作成するため削除
                     DestroyImmediate(Point.GetComponent<MeshFilter>());
 
                     wall_count++;
@@ -149,9 +155,10 @@ namespace RosSharp.RosBridgeClient
                 combineMesh[i].CombineMeshes(combineInstanceAry[i]);
                 map_mesh[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 map_mesh[i].GetComponent<MeshFilter>().mesh = combineMesh[i];
+                map_mesh[i].tag = "Grid";
             }
         }
-
+        /*
         void createcollder()
         {
             //ロボットの位置を取得
@@ -160,6 +167,7 @@ namespace RosSharp.RosBridgeClient
             //地図におけるロボットの位置を計算
 
         }
+        */
         protected override void ReceiveMessage(Messages.Navigation.OccupancyGrid gridmap)
         {
             Debug.Log(gridmap.data.Length);
@@ -203,6 +211,15 @@ namespace RosSharp.RosBridgeClient
             }
             receive_flag = 1;
             //Debug.Log(count);
+        }
+
+        public Vector3 GetMapData()
+        {
+            Vector3 map_data;
+            map_data.x = width;
+            map_data.y = height;
+            map_data.z = resolution;
+            return map_data;
         }
     }
 }
