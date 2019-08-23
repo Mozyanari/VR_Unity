@@ -34,14 +34,14 @@ namespace RosSharp.RosBridgeClient
         
         
         private Vector3[] GridPosition;
-        private Vector3 Position;
         private sbyte[] GridFlag;
         private sbyte[] old_GridFlag;
 
-        //mapのmeshデータ
-        private GameObject[] map_mesh;
-        private int cube_max;
+        //wallに関するデータ
+        private GameObject[] wall_mesh;
+        private int wall_number;
         private int cube_count;
+        public GameObject wall_object;
 
         //障害物の数，床の数
         private int wall_quantity = 0;
@@ -53,7 +53,7 @@ namespace RosSharp.RosBridgeClient
         //robot位置
         //public GameObject RobotObject;
 
-        GameObject Point;
+        
 
         // Use this for initialization
         protected override void Start()
@@ -90,18 +90,18 @@ namespace RosSharp.RosBridgeClient
             //受信フラグを折る
             receive_flag = 0;
             //使用するmeshを取得
-            Mesh cubeMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
-
-            //meshの頂点の数からcube_maxを設定
-            cube_max = (65536 / cubeMesh.vertexCount);
+            //Mesh cubeMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
+            Mesh wallobject_mesh = wall_object.GetComponent<MeshFilter>().sharedMesh;
+            //meshの頂点の数から一つのCombineInstanceの中に入るmeshの数wall_numberを設定
+            wall_number = (65536 / wallobject_mesh.vertexCount);
             //メッシュを何個に分割すればいいか計算
-            int mesh_count = (wall_quantity / cube_max) + 1;
+            int mesh_count_wall = (wall_quantity / wall_number) + 1;
 
-            //mesh_countからCombineInstanceを動的生成
-            CombineInstance[][] combineInstanceAry = new CombineInstance[mesh_count][];
-            for(int i=0;i<mesh_count;i++)
+            //mesh_count_wallからCombineInstanceを動的生成
+            CombineInstance[][] combineInstanceAry = new CombineInstance[mesh_count_wall][];
+            for(int i=0;i<mesh_count_wall;i++)
             {
-                combineInstanceAry[i] = new CombineInstance[cube_max];
+                combineInstanceAry[i] = new CombineInstance[wall_number];
             }
 
             int wall_count = 0;
@@ -110,13 +110,14 @@ namespace RosSharp.RosBridgeClient
             {
                 if (GridFlag[i] == 1)
                 {
-                    Debug.Log(wall_count);
+                    //Debug.Log(wall_count);
                     //位置の計算
                     //行の番号
                     int line = i % width;
                     //列の番号
                     int raw = i / width;
                     //行列の位置の計算
+                    Vector3 Position;
                     Position.x = ((resolution / 2) + (line) * resolution) + offset_x;
                     Position.y = ((resolution / 2) + (raw) * resolution) + offset_y;
                     Position.z = 0;
@@ -124,14 +125,15 @@ namespace RosSharp.RosBridgeClient
                     Position = Position.Ros2Unity();
 
                     //CombineInstanceに情報を入力
-                    combineInstanceAry[wall_count / cube_max][wall_count % cube_max].mesh = cubeMesh;
-                    combineInstanceAry[wall_count / cube_max][wall_count % cube_max].transform = Matrix4x4.TRS(new Vector3(Position.x, 0, Position.z), Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
+                    combineInstanceAry[wall_count / wall_number][wall_count % wall_number].mesh = wallobject_mesh;
+                    combineInstanceAry[wall_count / wall_number][wall_count % wall_number].transform = Matrix4x4.TRS(new Vector3(Position.x, 0, Position.z), Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
 
                     //Colliderを生成
-                    Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    GameObject Point;
+                    //Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Point = GameObject.Instantiate(wall_object) as GameObject;
                     Point.name = i.ToString();
                     Point.tag = "Grid";
-                    
                     Point.transform.position = Position;
                     Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
                     //meshはCombineMeshesでまとめて作成するため削除
@@ -146,16 +148,18 @@ namespace RosSharp.RosBridgeClient
                 }
             }
 
-            Mesh[] combineMesh = new Mesh[mesh_count];
-            map_mesh = new GameObject[mesh_count];
-            for (int i = 0; i< mesh_count; i++)
+            Mesh[] combineMesh = new Mesh[mesh_count_wall];
+            wall_mesh = new GameObject[mesh_count_wall];
+            //Instantiate(wall_mesh[1]);
+            for (int i = 0; i< mesh_count_wall; i++)
             {
                 combineMesh[i] = new Mesh();
-                combineMesh[i].name = "Mesh" + i;
                 combineMesh[i].CombineMeshes(combineInstanceAry[i]);
-                map_mesh[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                map_mesh[i].GetComponent<MeshFilter>().mesh = combineMesh[i];
-                map_mesh[i].tag = "Grid";
+                wall_mesh[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                wall_mesh[i].GetComponent<MeshRenderer>().material = wall_object.GetComponent<Renderer>().sharedMaterial;
+                wall_mesh[i].GetComponent<MeshFilter>().mesh = combineMesh[i];
+                wall_mesh[i].tag = "Grid";
+                wall_mesh[i].name = "Mesh" + i;
             }
         }
         /*
