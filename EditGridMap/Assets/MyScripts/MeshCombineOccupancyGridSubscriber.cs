@@ -39,21 +39,24 @@ namespace RosSharp.RosBridgeClient
 
         //wallに関するデータ
         private GameObject[] wall_mesh;
-        private int wall_number;
-        private int cube_count;
         public GameObject wall_object;
+
+        //floorに関するデータ
+        private GameObject[] floor_mesh;
+        public GameObject floor_object;
 
         //障害物の数，床の数
         private int wall_quantity = 0;
         private int floor_quantity = 0;
 
         //表示する結合したメッシュ
-        private Mesh[] combineMesh;
+        private Mesh[] wall_combineMesh;
+        private Mesh[] floor_combineMesh;
 
         //robot位置
         //public GameObject RobotObject;
 
-        
+
 
         // Use this for initialization
         protected override void Start()
@@ -89,28 +92,42 @@ namespace RosSharp.RosBridgeClient
 
             //受信フラグを折る
             receive_flag = 0;
-            //使用するmeshを取得
-            //Mesh cubeMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
-            Mesh wallobject_mesh = wall_object.GetComponent<MeshFilter>().sharedMesh;
-            //meshの頂点の数から一つのCombineInstanceの中に入るmeshの数wall_numberを設定
-            wall_number = (65536 / wallobject_mesh.vertexCount);
-            //メッシュを何個に分割すればいいか計算
-            int mesh_count_wall = (wall_quantity / wall_number) + 1;
 
-            //mesh_count_wallからCombineInstanceを動的生成
-            CombineInstance[][] combineInstanceAry = new CombineInstance[mesh_count_wall][];
-            for(int i=0;i<mesh_count_wall;i++)
+            //使用する壁のmeshを取得
+            //Mesh cubeMesh = GameObject.CreatePrimitive(PrimitiveType.Cube).GetComponent<MeshFilter>().sharedMesh;
+            Mesh wall_object_mesh = wall_object.GetComponent<MeshFilter>().sharedMesh;
+            //meshの頂点の数から一つのCombineInstanceの中に入るmeshの数wall_numberを設定
+            int wall_number = (65536 / wall_object_mesh.vertexCount);
+            //メッシュを何個に分割すればいいか計算
+            int wall_mesh_count = (wall_quantity / wall_number) + 1;
+
+            //使用する床のmeshを取得
+            Mesh floor_object_mesh = floor_object.GetComponent<MeshFilter>().sharedMesh;
+            //meshの頂点の数から一つのCombineInstanceの中に入るmeshの数wall_numberを設定
+            int floor_number = (65536 / floor_object_mesh.vertexCount);
+            //メッシュを何個に分割すればいいか計算
+            int floor_mesh_count = (floor_quantity / floor_number) + 1;
+
+            //wall_mesh_countからCombineInstanceを動的生成
+            CombineInstance[][] wall_combineInstanceAry = new CombineInstance[wall_mesh_count][];
+            for(int i=0;i<wall_mesh_count;i++)
             {
-                combineInstanceAry[i] = new CombineInstance[wall_number];
+                wall_combineInstanceAry[i] = new CombineInstance[wall_number];
+            }
+            //floor_mesh_countからCombineInstanceを動的生成
+            CombineInstance[][] floor_combineInstanceAry = new CombineInstance[floor_mesh_count][];
+            for (int i = 0; i < floor_mesh_count; i++)
+            {
+                floor_combineInstanceAry[i] = new CombineInstance[floor_number];
             }
 
             int wall_count = 0;
             int floor_count = 0;
             for (int i = 0; i < data_length; i++)
             {
+                //壁の生成
                 if (GridFlag[i] == 1)
                 {
-                    //Debug.Log(wall_count);
                     //位置の計算
                     //行の番号
                     int line = i % width;
@@ -125,8 +142,8 @@ namespace RosSharp.RosBridgeClient
                     Position = Position.Ros2Unity();
 
                     //CombineInstanceに情報を入力
-                    combineInstanceAry[wall_count / wall_number][wall_count % wall_number].mesh = wallobject_mesh;
-                    combineInstanceAry[wall_count / wall_number][wall_count % wall_number].transform = Matrix4x4.TRS(new Vector3(Position.x, 0, Position.z), Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
+                    wall_combineInstanceAry[wall_count / wall_number][wall_count % wall_number].mesh = wall_object_mesh;
+                    wall_combineInstanceAry[wall_count / wall_number][wall_count % wall_number].transform = Matrix4x4.TRS(Position, Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
 
                     //Colliderを生成
                     GameObject Point;
@@ -142,24 +159,70 @@ namespace RosSharp.RosBridgeClient
                     wall_count++;
 
                 }
+                //床の生成
                 else if (GridFlag[i] == 0)
                 {
-                    //todo:メッシュが決定次第実装
+                    //位置の計算
+                    //行の番号
+                    int line = i % width;
+                    //列の番号
+                    int raw = i / width;
+                    //行列の位置の計算
+                    Vector3 Position;
+                    Position.x = ((resolution / 2) + (line) * resolution) + offset_x;
+                    Position.y = ((resolution / 2) + (raw) * resolution) + offset_y;
+                    Position.z = -resolution;
+                    //ROSの座標系からUnityの座標系に変換
+                    Position = Position.Ros2Unity();
+
+                    //CombineInstanceに情報を入力
+                    floor_combineInstanceAry[floor_count / floor_number][floor_count % floor_number].mesh = floor_object_mesh;
+                    floor_combineInstanceAry[floor_count / floor_number][floor_count % floor_number].transform = Matrix4x4.TRS(Position, Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f)), new Vector3(resolution, resolution, resolution));
+
+                    //Colliderを生成
+                    GameObject Point;
+                    //Point = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    Point = GameObject.Instantiate(floor_object) as GameObject;
+                    Point.name = i.ToString();
+                    Point.tag = "Grid";
+                    Point.transform.position = Position;
+                    Point.transform.localScale = new Vector3((float)resolution, (float)resolution, (float)resolution);
+                    //meshはCombineMeshesでまとめて作成するため削除
+                    DestroyImmediate(Point.GetComponent<MeshFilter>());
+
+                    floor_count++;
                 }
             }
-
-            Mesh[] combineMesh = new Mesh[mesh_count_wall];
-            wall_mesh = new GameObject[mesh_count_wall];
+            //壁の結合したmeshの生成
+            Mesh[] wall_combineMesh = new Mesh[wall_mesh_count];
+            wall_mesh = new GameObject[wall_mesh_count];
             //Instantiate(wall_mesh[1]);
-            for (int i = 0; i< mesh_count_wall; i++)
+            for (int i = 0; i< wall_mesh_count; i++)
             {
-                combineMesh[i] = new Mesh();
-                combineMesh[i].CombineMeshes(combineInstanceAry[i]);
+                wall_combineMesh[i] = new Mesh();
+                wall_combineMesh[i].CombineMeshes(wall_combineInstanceAry[i]);
                 wall_mesh[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                DestroyImmediate(wall_mesh[i].GetComponent<Collider>());
                 wall_mesh[i].GetComponent<MeshRenderer>().material = wall_object.GetComponent<Renderer>().sharedMaterial;
-                wall_mesh[i].GetComponent<MeshFilter>().mesh = combineMesh[i];
+                wall_mesh[i].GetComponent<MeshFilter>().mesh = wall_combineMesh[i];
                 wall_mesh[i].tag = "Grid";
-                wall_mesh[i].name = "Mesh" + i;
+                wall_mesh[i].name = "Wall" + i;
+            }
+
+            //床の結合したmeshの生成
+            Mesh[] floor_combineMesh = new Mesh[floor_mesh_count];
+            floor_mesh = new GameObject[floor_mesh_count];
+            //Instantiate(floor_mesh[1]);
+            for (int i = 0; i < floor_mesh_count; i++)
+            {
+                floor_combineMesh[i] = new Mesh();
+                floor_combineMesh[i].CombineMeshes(floor_combineInstanceAry[i]);
+                floor_mesh[i] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                DestroyImmediate(floor_mesh[i].GetComponent<Collider>());
+                floor_mesh[i].GetComponent<MeshRenderer>().material = floor_object.GetComponent<Renderer>().sharedMaterial;
+                floor_mesh[i].GetComponent<MeshFilter>().mesh = floor_combineMesh[i];
+                floor_mesh[i].tag = "Grid";
+                floor_mesh[i].name = "Floor" + i;
             }
         }
         /*
