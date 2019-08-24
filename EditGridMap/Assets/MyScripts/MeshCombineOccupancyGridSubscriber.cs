@@ -25,7 +25,9 @@ namespace RosSharp.RosBridgeClient
         int create_flag = 0;
         int ready_flag = 0;
 
-        //private float yaw;
+        //目標FPS
+        [SerializeField]
+        public int target_FPS;
 
         //mapのデータ
         private float[] grids;
@@ -64,13 +66,14 @@ namespace RosSharp.RosBridgeClient
             base.Start();
             GridFlag = new sbyte[0];
             old_GridFlag = new sbyte[0];
+            
         }
 
         private void FixedUpdate()
         {
             if (receive_flag == 1)
             {
-                createmap();
+                StartCoroutine(createmap());
                 //一つ前の障害物のデータを比較用に保存
                 //old_GridFlag = GridFlag;
                 //createcollder();
@@ -78,7 +81,7 @@ namespace RosSharp.RosBridgeClient
 
         }
 
-        private void createmap()
+        private IEnumerator createmap()
         {
             //前回作られた物があれば削除する(メッシュとコライダー)
             var clones = GameObject.FindGameObjectsWithTag("Grid");
@@ -123,8 +126,20 @@ namespace RosSharp.RosBridgeClient
 
             int wall_count = 0;
             int floor_count = 0;
+            //地図生成時に全データをすべて探索するので，コルーチンを使いながら分割して処理する
+            //目標FPSから1フレームにかけることが出来る時間を計算
+            //float target_time = (1.0f / (float)target_FPS);
+            float goNextFrameTime = Time.realtimeSinceStartup + 0.01f;
+
             for (int i = 0; i < data_length; i++)
             {
+                // 10msec以上経過したら次フレームへ
+                if (Time.realtimeSinceStartup >= goNextFrameTime)
+                {
+                    yield return null;
+                    goNextFrameTime = Time.realtimeSinceStartup + 0.01f;
+                }
+
                 //壁の生成
                 if (GridFlag[i] == 1)
                 {

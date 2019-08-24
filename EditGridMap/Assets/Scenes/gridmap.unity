@@ -831,7 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeout: 10
   Protocol: 0
-  RosBridgeServerUrl: ws://172.28.35.217:9090
+  RosBridgeServerUrl: ws://192.168.0.3:9090
 --- !u!4 &956537776
 Transform:
   m_ObjectHideFlags: 0
@@ -858,7 +858,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /map
   TimeStep: 0
-  wall_object: {fileID: 1083340138676106, guid: 64bc9086b27979647ae378c15f4fc5e6,
+  target_FPS: 0
+  wall_object: {fileID: 1326114834185264, guid: 5dfba699a08e90a4db5b9d0a99cead9d,
+    type: 2}
+  floor_object: {fileID: 1081963555638414, guid: 1d6b234f44455a74f95e9e93dd9b4727,
     type: 2}
 --- !u!114 &956537778
 MonoBehaviour:
