@@ -24,6 +24,9 @@ public class Quest_Laser : MonoBehaviour
     [SerializeField]
     public RosSharp.RosBridgeClient.MeshCombineOccupancyGridSubscriber map_data;
 
+    [SerializeField]
+    public RosSharp.RosBridgeClient.Laser_PoseStampedPublisher poseStampedPublisher;
+
     // コントローラー
     private Transform Pointer_R;
     private Transform Pointer_L;
@@ -62,6 +65,8 @@ public class Quest_Laser : MonoBehaviour
 
             //ヒットした名前を表示
             text.text = hitInfo.collider.gameObject.name;
+
+            //トリガーで選択したブロックを消す
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger,OVRInput.Controller.RTouch))
             {
                 //完全に消える
@@ -91,6 +96,36 @@ public class Quest_Laser : MonoBehaviour
                 select_cubes.Add(point);
                 OVRDebugConsole.Log("selectcubeadd");
                 
+            }
+            //右コントローラのBを押したらブロックを追加
+            else if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
+            {
+                //polygonに選択したcubeの情報を代入
+                //mapの縦と横のセル数を取得
+                int map_width = (int)map_data.GetMapData().x;
+                int map_height = (int)map_data.GetMapData().y;
+                //cubeの番号からmapのどこのブロックか計算して代入
+                //ただ，pgm形式のデータに対応するために(x,y)=(height-y,x)に変換
+                RosSharp.RosBridgeClient.Messages.Geometry.Point32 point = new RosSharp.RosBridgeClient.Messages.Geometry.Point32();
+                //point.x = int.Parse(hitInfo.collider.gameObject.name) % map_width;
+                //point.y = int.Parse(hitInfo.collider.gameObject.name) / map_width;
+                point.x = (map_height - 1) - (int.Parse(hitInfo.collider.gameObject.name) / map_width);
+                point.y = int.Parse(hitInfo.collider.gameObject.name) % map_width;
+                point.z = 0.0f;
+                OVRDebugConsole.Log("x_pix" + map_width + "y_pix" + map_height);
+                OVRDebugConsole.Log("x=" + point.x.ToString() + " y=" + point.y.ToString() + " z=" + point.z.ToString());
+                //OVRDebugConsole.Log("y="+point.y.ToString());
+                //OVRDebugConsole.Log("z="+point.z.ToString());
+
+                //List選択したcubeの情報を追加
+                select_cubes.Add(point);
+                OVRDebugConsole.Log("selectcubeadd");
+            }
+            //右コントローラのAを押したら目標地点にする
+            else if (OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch))
+            {
+                //当たった障害物の位置をそのまま送信(unity座標)
+                poseStampedPublisher.SetPoseStamped(hitInfo.collider.transform.position);
             }
             else if (OVRInput.Get(OVRInput.RawButton.Back))
             {

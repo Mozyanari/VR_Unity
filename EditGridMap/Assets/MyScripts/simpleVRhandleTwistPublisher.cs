@@ -59,7 +59,7 @@ namespace RosSharp.RosBridgeClient
             //値の初期化
             message.linear.x = 0.0f;
             message.angular.z = 0.0f;
-            OVRDebugConsole.Log("message");
+            //OVRDebugConsole.Log("message");
 
             float linear_speed = max_linear_speed;
             float angle_speed = max_angle_speed;
@@ -89,8 +89,8 @@ namespace RosSharp.RosBridgeClient
             }
 
             Publish(message);
-            OVRDebugConsole.Log("x " + message.linear.x);
-            OVRDebugConsole.Log("w " + message.angular.z);
+            //OVRDebugConsole.Log("x " + message.linear.x);
+            //OVRDebugConsole.Log("w " + message.angular.z);
         }
     }
 }
