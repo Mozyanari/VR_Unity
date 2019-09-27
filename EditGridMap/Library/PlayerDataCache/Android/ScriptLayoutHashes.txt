@@ -5,6 +5,7 @@ SceneListBegin?
 Assets/Scenes/gridmap.unity
 SceneListEnd?
 90c2ec7174376e741f9a1aca7a405252 Assembly-UnityScript.dll:.ThirdPersonCamera
+0477b33bdb8b082be3d90ce38ec9976f Assembly-CSharp.dll:RosSharp.RosBridgeClient.Laser_PoseStampedPublisher
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.ONSPVersion
 12ef2b27731ef02069fdc662fdfb7ef1 Assembly-CSharp.dll:.SocialPlatformManager
 a83cd35b9f1ce7ca723f8d90baad64fa Assembly-CSharp.dll:RosSharp.RosBridgeClient.simpleVRhandleTwistPublisher
@@ -51,6 +52,7 @@ d947b95c171314b81b313a2f4ffd0411 Assembly-CSharp.dll:RosSharp.RosBridgeClient.Jo
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:RosSharp.RosBridgeClient.LaserScanWriter
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.FPSChecker
 4e3c5fc406d7d5c26e68baf76aa9e029 Assembly-CSharp.dll:.BoundsLockedObject
+c92c82ec82331cbada5e7f58ae65e623 Assembly-CSharp.dll:RosSharp.RosBridgeClient.PathPublisher
 53496dd22adbe0ca9ce3fd0ab6eb46ae Assembly-CSharp.dll:RosSharp.RosBridgeClient.UrdfPatcher
 2452d41050e5c88538ceb030fe32dd9f Assembly-CSharp.dll:.TextureOffset
 663945a1b0d2f96b6ff2f28fc2ba81f4 Assembly-CSharp.dll:RosSharp.RosBridgeClient.GetParamServiceProvider
@@ -153,7 +155,7 @@ c7dd12c15208b0447e101f80038706df UnityEngine.Timeline.dll:UnityEngine.Timeline.A
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 0ddb2c46096a1e59e0dce07886ce4769 UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 64f3a13c1277a7f1324321d93d0ec13b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-3de51ef5ea58d58ded34f0679c8ebe8c Assembly-CSharp.dll:.Quest_Laser
+a13a2e4fc05cac67381d3dc0f07314ab Assembly-CSharp.dll:.Quest_Laser
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.OVROverlayMeshGenerator
 544c0bfa7804c9f7c25f5fd57fc51590 Assembly-CSharp.dll:.LocomotionTeleport
 66b3109aa5921cf800bec17926c6adba Unity.TextMeshPro.dll:TMPro.TMP_SubMeshUI
@@ -412,6 +414,7 @@ e033f131358cea5a0eabf9561e781deb UnityEngine.TestRunner.dll:UnityEngine.TestTool
 28a95668dd28649297d595834fe8417e UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSoundfieldExtension
 28a95668dd28649297d595834fe8417e UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioSourceExtension
 e1e92e5506f740deff0a5cb39faf9273 Assembly-CSharp.dll:.DebugUIBuilder
+8339d869cdca75a117ad13c3a19168bc Assembly-CSharp.dll:RosSharp.RosBridgeClient.PathSubscriber
 75bd87271a0313e895b399bc37dec77b Assembly-CSharp.dll:.OvrAvatarMaterialManager
 4773c42070bf91561772ca6202bbb751 Assembly-CSharp.dll:.OvrAvatarMeshInstance
 23d1fe662fdb6af8213e5eba5639d7f3 Assembly-CSharp-firstpass.dll:.ExamplePlayerController

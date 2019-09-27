@@ -31,6 +31,7 @@ namespace RosSharp.RosBridgeClient
         public GameObject L_controller;
 
         private Messages.Geometry.Twist message;
+        int handle_flag = 0;
         /*
         private float previousRealTime;
         private Vector3 previousPosition = Vector3.zero;
@@ -67,6 +68,7 @@ namespace RosSharp.RosBridgeClient
             if ((OVRInput.Get(OVRInput.RawAxis1D.RHandTrigger) > 0.0f) && (OVRInput.Get(OVRInput.RawAxis1D.LHandTrigger) > 0.0f))
             {
                 OVRDebugConsole.Log("grab bottn");
+                handle_flag = 1;
                 //コントローラの相対的な角度を計算(-180~180)
                 float diff_x = R_controller.gameObject.transform.position.x - L_controller.gameObject.transform.position.x;
                 float diff_y = R_controller.gameObject.transform.position.y - L_controller.gameObject.transform.position.y;
@@ -86,9 +88,17 @@ namespace RosSharp.RosBridgeClient
                     message.linear.x = -linear_speed;
                     message.angular.z = (-controller_angle / 180.0f) * angle_speed;
                 }
+                Publish(message);
+            }else if(handle_flag == 1)
+            {
+                //ハンドル操作が終わった後に一回だけ停止コマンドを送る
+                handle_flag = 0;
+                message.linear.x = 0.0f;
+                message.angular.z = 0.0f;
+                Publish(message);
             }
 
-            Publish(message);
+            
             //OVRDebugConsole.Log("x " + message.linear.x);
             //OVRDebugConsole.Log("w " + message.angular.z);
         }
