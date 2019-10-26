@@ -1,8 +1,8 @@
 Android
 PlayerPath?
-C:/Users/Morishita-PC/Documents/VR_Unity/EditGridMap/webcamera.apk
+C:/Users/Morishita-PC/Documents/VR_Unity/EditGridMap/pointcloud.apk
 SceneListBegin?
-Assets/Scenes/gridmap.unity
+Assets/Scenes/PointCloud.unity
 SceneListEnd?
 90c2ec7174376e741f9a1aca7a405252 Assembly-UnityScript.dll:.ThirdPersonCamera
 0477b33bdb8b082be3d90ce38ec9976f Assembly-CSharp.dll:RosSharp.RosBridgeClient.Laser_PoseStampedPublisher
@@ -183,10 +183,12 @@ a108ad054c5f7c3994ed872a90402ec9 Assembly-CSharp.dll:.GazeTarget
 a814332c5f3560866cab2303f4fe52c5 Assembly-CSharp.dll:.ONSPAudioSource
 682ee9c86fa05c0b5c84fcdfa8c3d890 Assembly-CSharp.dll:.OvrAvatarSettings
 66e63e00ca2023a113d60f3ce61e4565 Assembly-CSharp-firstpass.dll:SimpleInputNamespace.MouseButtonInputSwipeGesture
+4bdae23ca34a4a2dadeff3637d58c3a9 Assembly-CSharp.dll:RosSharp.RosBridgeClient.PoseStampedLerpSubscriber
 7eab4754e86bdc11d897648ce20c0fe4 Assembly-CSharp.dll:OVR.AudioManager
 382b8ef512fa8d6108723a01b57af65b UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsEventTracker
 d22c788799ee45d8676254eccf20e8b8 UnityEngine.Analytics.dll:UnityEngine.Analytics.AnalyticsTracker
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:RosSharp.RosBridgeClient.JointStateWriter
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.PointCloud
 51097af3d650b761f33a1080d1e8ef07 Assembly-CSharp.dll:Oculus.Platform.Samples.VrBoardGame.IAPManager
 cff5678405d2f584226ef8f6dd24e4a0 Assembly-CSharp.dll:.TeleportTransitionWarp
 1bf2c0f2ee4a1db20486b3b5c7e2f7d1 Assembly-CSharp-firstpass.dll:SimpleInputNamespace.Dpad
@@ -286,6 +288,7 @@ c31ff9acb65f7a15b5c6fd77c3314d83 Vuforia.UnityExtensions.dll:Vuforia.WireframeBe
 486cd95c82d8305219c352c06b776e1f Assembly-UnityScript.dll:.FPSInputController
 ff283be4d35bba5c753f57be9c05b539 Assembly-CSharp.dll:.ONSPReflectionZone
 c5cc2ae0c28fdde28d530dbfd313749b Assembly-CSharp.dll:RosSharp.RosBridgeClient.PoseStampedPublisher
+d27f28410f1c8d980b1e7bbe427ba91b Assembly-CSharp.dll:RosSharp.RosBridgeClient.PointCloud2Subscriber
 f7e7290267ed3e4bf105f8457d2fb52d Assembly-CSharp.dll:Oculus.Platform.Samples.VrBoardGame.GamePiece
 b10fce1a0d8595d9ebaa20e8bd679a1d Assembly-CSharp.dll:.TeleportOrientationHandlerHMD
 b935e8c883dc43af5da0c41f89a0ba8f Assembly-CSharp-firstpass.dll:SimpleInputNamespace.ButtonInputKeyboard

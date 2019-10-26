@@ -882,6 +882,7 @@ GameObject:
   - component: {fileID: 956537777}
   - component: {fileID: 956537778}
   - component: {fileID: 956537779}
+  - component: {fileID: 956537784}
   - component: {fileID: 956537780}
   - component: {fileID: 956537781}
   - component: {fileID: 956537782}
@@ -920,7 +921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeout: 10
   Protocol: 0
-  RosBridgeServerUrl: ws://172.28.35.33:9090
+  RosBridgeServerUrl: ws://192.168.0.3:9090
 --- !u!4 &956537776
 Transform:
   m_ObjectHideFlags: 0
@@ -971,7 +972,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 956537773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c2ca9548c1f47d4b992fc56a95690cc, type: 3}
   m_Name: 
@@ -1004,7 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19d8c208fa4d2d44afaf3bc4834584b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /icart/diff_drive_controller/cmd_vel
+  Topic: /icart_depth/diff_drive_controller/cmd_vel
   max_linear_speed: 0.2
   max_angle_speed: 0.5
   R_controller: {fileID: 1605583829}
@@ -1038,6 +1039,20 @@ MonoBehaviour:
   Topic: /scan_PointCloud2
   TimeStep: 0
   PointCloud_Object: {fileID: 607246804}
+--- !u!114 &956537784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 956537773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50597d94ec031244bb50a02ad5a550fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /amcl_PoseStamped
+  TimeStep: 0
+  PublishedTransform: {fileID: 861791109}
 --- !u!1 &1052697494
 GameObject:
   m_ObjectHideFlags: 0
