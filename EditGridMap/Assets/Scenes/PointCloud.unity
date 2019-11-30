@@ -113,6 +113,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1575189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1921882602}
 --- !u!1 &37756860
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +549,7 @@ GameObject:
   - component: {fileID: 607246805}
   - component: {fileID: 607246806}
   - component: {fileID: 607246807}
+  - component: {fileID: 607246808}
   m_Layer: 0
   m_Name: DepthPointCloud
   m_TagString: Untagged
@@ -558,11 +564,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 607246804}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.10000001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 861791109}
-  m_RootOrder: 4
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &607246806
 MeshRenderer:
@@ -606,6 +612,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 607246804}
   m_Mesh: {fileID: 0}
+--- !u!114 &607246808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607246804}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c9686e3b2611b47bfaf68a3e144925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 1575189}
 --- !u!1001 &692743679
 Prefab:
   m_ObjectHideFlags: 0
@@ -777,11 +795,9 @@ Transform:
   m_Children:
   - {fileID: 1601736666}
   - {fileID: 1921882603}
-  - {fileID: 1590861380}
   - {fileID: 1052697495}
-  - {fileID: 607246805}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &955937736
 GameObject:
@@ -881,13 +897,13 @@ GameObject:
   - component: {fileID: 956537775}
   - component: {fileID: 956537777}
   - component: {fileID: 956537778}
-  - component: {fileID: 956537779}
   - component: {fileID: 956537784}
   - component: {fileID: 956537780}
   - component: {fileID: 956537781}
   - component: {fileID: 956537782}
   - component: {fileID: 956537774}
   - component: {fileID: 956537783}
+  - component: {fileID: 956537779}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -972,14 +988,14 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 956537773}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2ca9548c1f47d4b992fc56a95690cc, type: 3}
+  m_Script: {fileID: 11500000, guid: ba7b6cf5987d62d489ba785c899f8226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /amcl_PoseStamped
-  TimeStep: 0
-  PublishedTransform: {fileID: 861791109}
+  Topic: /head_pose
+  PublishedTransform: {fileID: 1956192475}
+  FrameId: Unity
 --- !u!114 &956537780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,6 +1055,8 @@ MonoBehaviour:
   Topic: /scan_PointCloud2
   TimeStep: 0
   PointCloud_Object: {fileID: 607246804}
+  RobotPosition: {fileID: 861791106}
+  HeadRotation: {fileID: 1575189}
 --- !u!114 &956537784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,7 +1100,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 861791109}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1052697496
 MonoBehaviour:
@@ -1498,12 +1516,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1590861379}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 1, z: 1.02}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
-  m_Father: {fileID: 861791109}
-  m_RootOrder: 2
+  m_Father: {fileID: 1601736666}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &1590861381
 MonoBehaviour:
@@ -1766,6 +1784,26 @@ Prefab:
     - target: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 9.830001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}

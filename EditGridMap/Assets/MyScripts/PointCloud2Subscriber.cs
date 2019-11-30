@@ -19,6 +19,10 @@ namespace RosSharp.RosBridgeClient
     {
         //参照するオブジェクト
         public GameObject PointCloud_Object;
+        //PointCloudを取得した時のロボットの位置
+        public GameObject RobotPosition;
+        //PointCloudを取得した時の頭の向き
+        public GameObject HeadRotation;
 
         //取得した点群データ
         private Messages.Sensor.PointCloud2 pointcloud;
@@ -50,6 +54,7 @@ namespace RosSharp.RosBridgeClient
             base.Start();
             mesh = new Mesh();
             PointCloud_Object.GetComponent<MeshFilter>().mesh = mesh;
+            PointCloud_Object.GetComponent<Renderer>().material.SetFloat("_PointSize", 5.0f);
             //GetComponent<MeshFilter>().mesh = mesh;
         }
 
@@ -74,19 +79,31 @@ namespace RosSharp.RosBridgeClient
                 indecies = new int[numPoints];
                 colors = new Color[numPoints];
                 
-                for (int i = 0; i < numPoints; ++i)
+                for (int i = 0; i < numPoints; i++)
                 {
                     //位置
                     //デプスカメラは前方がz，右がx，下がy軸なので，それに合わせてUnityに表示
+                    //また，ROS側ではcm単位でデータが届くので100で割ってmに戻す
                     points[i].x = BitConverter.ToInt16(pointcloud.data, i * data_step + x_offset) / 100.0f;
                     points[i].y = -BitConverter.ToInt16(pointcloud.data, i * data_step + y_offset) / 100.0f;
                     points[i].z = BitConverter.ToInt16(pointcloud.data, i * data_step + z_offset) / 100.0f;
                     //色
+                    colors[i].r = pointcloud.data[i * data_step + rgb_offset + 2] / 255.0f;
+                    colors[i].g = pointcloud.data[i * data_step + rgb_offset + 1] / 255.0f;
+                    colors[i].b = pointcloud.data[i * data_step + rgb_offset + 0] / 255.0f;
+                    colors[i].a = 0.5f;
+                    /*
                     colors[i].r = pointcloud.data[i * data_step + rgb_offset + 0]/255.0f;
                     colors[i].g = pointcloud.data[i * data_step + rgb_offset + 1]/255.0f;
                     colors[i].b = pointcloud.data[i * data_step + rgb_offset + 2]/255.0f;
-                    colors[i].a = 0.8f;
-
+                    colors[i].a = 1.0f;
+                    */
+                    /*
+                    colors[i].r = 255.0f;
+                    colors[i].g = 0.0f;
+                    colors[i].b = 0.0f;
+                    colors[i].a = 1.0f;
+                    */
                     indecies[i] = i;
 
                     //Debug.Log(i);
@@ -100,11 +117,24 @@ namespace RosSharp.RosBridgeClient
 
         private void create_pointcloud2()
         {
+            //PointCloudを表示する原点を計算
+            PointCloud_Object.transform.position = RobotPosition.transform.position + new Vector3(0.0f,0.1f,-0.0f);
+            PointCloud_Object.transform.rotation = RobotPosition.transform.rotation;
+            //PointCloudを表示する向きを計算
+            //roll,pitch軸の回転は無効にする
+            /*
+            Vector3 vec3 = HeadRotation.transform.rotation.eulerAngles;
+            vec3.z = 0.0f;
+            //vec3.x = 0.0f;
+            PointCloud_Object.transform.rotation = Quaternion.Euler(vec3);
+            */
+            
+
+            //meshを更新してPointCloudを表示
             mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.vertices = points;
             mesh.colors = colors;
             mesh.SetIndices(indecies, MeshTopology.Points, 0);
-            PointCloud_Object.GetComponent<Renderer>().material.SetFloat("_PointSize", 5.0f);
         }
 
         private void FixedUpdate()

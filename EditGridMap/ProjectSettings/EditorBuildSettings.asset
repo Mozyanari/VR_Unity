@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/webcamera.unity
     guid: 6556ddef207362f499ada62883197b68
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PointCloud.unity
     guid: 63ebb2dcab664ba438ed4912af9419b9
+  - enabled: 1
+    path: Assets/Scenes/icart_HMD.unity
+    guid: cf8f48d1e9498924d874af36d40846eb
   m_configObjects: {}

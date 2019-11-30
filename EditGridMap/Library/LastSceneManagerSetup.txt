@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/PointCloud.unity
+- path: Assets/Scenes/icart_HMD.unity
   isLoaded: 1
   isActive: 1
