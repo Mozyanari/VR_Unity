@@ -60,6 +60,17 @@ namespace RosSharp.RosBridgeClient
             message.linear = new Messages.Geometry.Vector3();
             message.angular = new Messages.Geometry.Vector3();
         }
+
+        //ロボットの移動速度を取得できる関数
+        public Vector3 GetTwist()
+        {
+            Vector3 send_data = new Vector3();
+            send_data.x = message.linear.x;
+            send_data.z = message.angular.z;
+
+            return send_data;
+        }
+
         private void UpdateMessage()
         {
             //値の初期化
@@ -115,16 +126,17 @@ namespace RosSharp.RosBridgeClient
                 {
                     controller_angle = 0;
                 }
-
+                //旋回速度
+                message.angular.z = (controller_angle / 180.0f) * angle_speed;
+                //前進後退速度
                 if ((L_analog.y > 0.1f) || (R_analog.y > 0.1f))
                 {
                     message.linear.x = linear_speed;
-                    message.angular.z = (controller_angle / 180.0f) * angle_speed;
                 }
                 else if ((L_analog.y < -0.1f) || (R_analog.y < -0.1f))
                 {
                     message.linear.x = -linear_speed;
-                    message.angular.z = (-controller_angle / 180.0f) * angle_speed;
+                    message.angular.z = -message.angular.z;
                 }
                 OVRDebugConsole.Log("R_x=" + vector3_R.x + "R_y=" + vector3_R.y + "L_x=" + vector3_L.x +"L_y=" + vector3_L.y);
                 OVRDebugConsole.Log("rad=" + controller_angle + "diff_x=" + diff_x + "diff_y=" + diff_y);

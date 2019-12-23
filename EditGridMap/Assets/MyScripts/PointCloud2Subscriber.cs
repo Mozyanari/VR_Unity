@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-struct PointCloud2_data
-{
-    short x;
-    short y;
-    short z;
-    sbyte r;
-    sbyte g;
-    sbyte b;
-};
 
 namespace RosSharp.RosBridgeClient
 {

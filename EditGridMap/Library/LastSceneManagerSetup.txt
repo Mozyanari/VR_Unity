@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/icart_HMD.unity
+- path: Assets/Scenes/icart_simlation.unity
   isLoaded: 1
   isActive: 1

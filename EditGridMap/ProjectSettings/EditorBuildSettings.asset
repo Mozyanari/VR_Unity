@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PointCloud.unity
     guid: 63ebb2dcab664ba438ed4912af9419b9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/icart_HMD.unity
     guid: cf8f48d1e9498924d874af36d40846eb
+  - enabled: 1
+    path: Assets/Scenes/icart_simlation.unity
+    guid: 5ca76f08c1229254cb861b5f8e74deec
   m_configObjects: {}
